@@ -4,6 +4,13 @@ on:
   push:
   pull_request:
   workflow_dispatch:   # ← ezt add hozzá
+      inputs:
+        upload-artifact:
+          type: boolean
+          default: true
+        upload-tag:
+          type: string
+          default: "nightly"
   workflow_call:
     inputs:
       upload-artifact:
