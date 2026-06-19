@@ -1,6 +1,9 @@
 name: Build the flutter version of the RustDesk
 
 on:
+  push:
+  pull_request:
+  workflow_dispatch:   # ← ezt add hozzá
   workflow_call:
     inputs:
       upload-artifact:
