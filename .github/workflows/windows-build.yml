@@ -36,7 +36,7 @@ jobs:
       - name: Install dependencies
         run: |
           # vcpkg install libvpx:x64-windows-static libyuv:x64-windows-static opus:x64-windows-static aom:x64-windows-static
-          
+          vcpkg install --triplet x64-windows --overlay-ports=res/vcpkg
           
       - name: Build
         env:
@@ -45,7 +45,7 @@ jobs:
         run: |
           flutter pub get
           cargo build --release
-          vcpkg install --triplet x64-windows-static
+          
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
