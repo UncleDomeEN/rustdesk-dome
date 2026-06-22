@@ -97,15 +97,14 @@ jobs:
         run: |
           pip3 install toml
           cargo install flutter_rust_bridge_codegen --version 1.80.1 --locked
-          cd flutter
-          flutter pub get
-          cd ..
           flutter_rust_bridge_codegen \
             --rust-input src/flutter_ffi.rs \
             --dart-output flutter/lib/generated_bridge.dart \
             --dart-format-line-length 120
-          dart run build_runner build --delete-conflicting-outputs --delete-conflicting-outputs
-
+          cd flutter
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
+          
       - name: Build rustdesk
         run: |
           python3 .\build.py --portable --flutter --skip-portable-pack
