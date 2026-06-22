@@ -24,8 +24,14 @@ jobs:
           toolchain: "1.75"
           targets: x86_64-pc-windows-msvc
 
+      # - name: Install LLVM
+      #  run: choco install llvm --version=15.0.6 -y
+
       - name: Install LLVM
-        run: choco install llvm --version=15.0.6 -y
+        run: echo "LLVM already installed"
+        
+      - name: Set LLVM path
+        run: echo "LIBCLANG_PATH=C:\Program Files\LLVM\bin" >> $env:GITHUB_ENV
 
       - name: Install dependencies
         run: |
@@ -34,7 +40,7 @@ jobs:
       - name: Build
         env:
           VCPKG_ROOT: "C:/vcpkg"
-          LIBCLANG_PATH: "C:/Program Files/LLVM/bin"
+          # LIBCLANG_PATH: "C:/Program Files/LLVM/bin"
         run: |
           flutter pub get
           cargo build --release
