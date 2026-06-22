@@ -95,6 +95,7 @@ jobs:
       - name: Generate bridge
         run: |
           pip3 install toml
+          cd flutter
           flutter pub get
           dart run build_runner build --delete-conflicting-outputs
 
