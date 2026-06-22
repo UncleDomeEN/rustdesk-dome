@@ -1,0 +1,46 @@
+name: Build Windows Client
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-2022
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.5"
+          channel: stable
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@v1
+        with:
+          toolchain: "1.75"
+          targets: x86_64-pc-windows-msvc
+
+      - name: Install LLVM
+        run: choco install llvm --version=15.0.6 -y
+
+      - name: Install dependencies
+        run: |
+          vcpkg install libvpx:x64-windows-static libyuv:x64-windows-static opus:x64-windows-static aom:x64-windows-static
+          
+      - name: Build
+        env:
+          VCPKG_ROOT: "C:/vcpkg"
+          LIBCLANG_PATH: "C:/Program Files/LLVM/bin"
+        run: |
+          flutter pub get
+          cargo build --release
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: rustdesk-windows-x64
+          path: target/release/rustdesk.exe
