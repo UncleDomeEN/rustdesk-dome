@@ -120,11 +120,20 @@ jobs:
         run: |
           Get-ChildItem -Recurse | Select-Object FullName
           
+      - name: Locate generated EXEs
+        shell: pwsh
+        run: |
+          Write-Host "PWD:"
+          pwd
+          Write-Host ""
+          Get-ChildItem -Recurse *.exe |
+            Where-Object { $_.Name -match "rustdesk" } |
+            Format-Table FullName
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: rustdesk-windows
           path: |
-            rustdesk_portable.exe
-            rustdesk-*-install.exe
-  
+            **/rustdesk_portable.exe
+            **/rustdesk-*-install.exe  
