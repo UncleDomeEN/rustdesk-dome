@@ -110,8 +110,18 @@ jobs:
         run: |
           python3 build.py --portable --flutter
 
+      - name: List EXEs
+        shell: pwsh
+        run: |
+          Get-ChildItem -Recurse *.exe | Select-Object FullName
+
+      - name: List directories
+        shell: pwsh
+        run: |
+          Get-ChildItem -Recurse | Select-Object FullName
+    
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: rustdesk-windows-x64
-          path: rustdesk/
+          path: . # rustdesk/
