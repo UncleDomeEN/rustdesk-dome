@@ -119,9 +119,12 @@ jobs:
         shell: pwsh
         run: |
           Get-ChildItem -Recurse | Select-Object FullName
-    
-      - name: Upload artifact
+          
+      - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: rustdesk-windows-x64
-          path: . # rustdesk/
+          name: rustdesk-windows
+          path: |
+            rustdesk_portable.exe
+            rustdesk-*-install.exe
+  
